@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { MagneticButton } from "@/components/magnetic-button";
 import { EASE_CINEMATIC } from "@/lib/motion";
+import Image from "next/image";
 
 const container = {
     hidden: {},
@@ -36,9 +37,16 @@ export function Hero() {
     return (
         <section className="relative flex h-screen w-full items-end overflow-hidden bg-obsidian">
             {/* Background image */}
-            <div
+            {/* <div
                 className="absolute inset-0 bg-cover bg-center"
                 style={{ backgroundImage: "url('/assets/aether-os-bg.jpg')" }}
+            /> */}
+            <Image
+                src="/assets/aether-os-bg.jpg"
+                alt=""
+                fill
+                priority
+                className="object-cover"
             />
 
             {/* Scrim gradient for text legibility */}
@@ -61,7 +69,7 @@ export function Hero() {
                     </motion.span>
                 </div>
 
-                <h1 className="flex flex-col font-serif text-[13vw] leading-[0.9] italic md:text-[8vw]">
+                <h1 className="flex flex-col font-serif text-[clamp(2.75rem,13vw,10rem)] leading-[0.9] italic md:text-[8vw]">
                     <span className="overflow-hidden">
                         <motion.span variants={lineReveal} className="block">
                             The Operating

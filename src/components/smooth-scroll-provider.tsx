@@ -7,6 +7,15 @@ export function SmoothScrollProvider({ children }: { children: ReactNode }) {
     const lenisRef = useRef<Lenis | null>(null);
 
     useEffect(() => {
+        const prefersReducedMotion = window.matchMedia(
+            "(prefers-reduced-motion: reduce)"
+        ).matches;
+
+        if (prefersReducedMotion) {
+            // Skip Lenis entirely — let native scroll behavior take over.
+            return;
+        }
+
         const lenis = new Lenis({
             duration: 1.2,
             easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),

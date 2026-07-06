@@ -31,6 +31,13 @@
     background-color: var(--color-violet);
     color: var(--color-ethereal);
   }
+
+  a:focus-visible,
+  button:focus-visible {
+    outline: 2px solid var(--color-violet);
+    outline-offset: 4px;
+    border-radius: 4px;
+  }
 }
 
 @utility gradient-mesh-text {

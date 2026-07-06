@@ -1,9 +1,11 @@
 "use client";
 
+import { useReducedMotion } from "@/hooks/use-reduced-motion";
 import { motion } from "framer-motion";
 import { Sparkles } from "lucide-react";
 
 export function OrbitVisual() {
+    const prefersReducedMotion = useReducedMotion();
     return (
         <div className="relative flex h-48 w-full items-center justify-center">
             <div className="absolute h-40 w-40 rounded-full border border-ethereal/10" />
@@ -11,7 +13,7 @@ export function OrbitVisual() {
 
             <motion.div
                 className="absolute h-40 w-40"
-                animate={{ rotate: 360 }}
+                animate={prefersReducedMotion ? {} : { rotate: 360 }}
                 transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
             >
                 <div className="absolute top-0 left-1/2 h-3 w-3 -translate-x-1/2 rounded-full bg-sunset shadow-[0_0_20px_4px_rgba(255,77,77,0.6)]" />
@@ -19,7 +21,7 @@ export function OrbitVisual() {
 
             <motion.div
                 className="absolute h-28 w-28"
-                animate={{ rotate: -360 }}
+                animate={prefersReducedMotion ? {} : { rotate: -360 }}
                 transition={{ duration: 9, repeat: Infinity, ease: "linear" }}
             >
                 <div className="absolute top-0 left-1/2 h-2.5 w-2.5 -translate-x-1/2 rounded-full bg-neon-pink shadow-[0_0_16px_4px_rgba(255,0,128,0.6)]" />
