@@ -3,6 +3,7 @@ import { Geist, Instrument_Serif } from "next/font/google";
 import { NoiseOverlay } from "@/components/noise-overlay";
 import "./globals.css";
 import { SmoothScrollProvider } from "@/components/smooth-scroll-provider";
+import { Navbar } from "@/components/navbar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,7 +35,10 @@ export default function RootLayout({
         className={`${geistSans.variable} ${instrumentSerif.variable} bg-obsidian text-ethereal antialiased font-sans overflow-x-hidden`}
       >
         <NoiseOverlay />
-        <SmoothScrollProvider>{children}</SmoothScrollProvider>
+        <SmoothScrollProvider>
+          <Navbar />
+          {children}
+        </SmoothScrollProvider>
       </body>
     </html>
   );
