@@ -1,0 +1,54 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { EASE_CINEMATIC } from "@/lib/motion";
+import { useCountUp } from "@/hooks/use-count-up";
+
+interface Stat {
+    target: number;
+    suffix: string;
+    label: string;
+}
+
+const STATS: Stat[] = [
+    { target: 120, suffix: "K+", label: "Ambient Sessions" },
+    { target: 98, suffix: "%", label: "Faster Response" },
+    { target: 500, suffix: "+", label: "Teams Onboarded" },
+];
+
+function AnimatedStat({ stat, delay }: { stat: Stat; delay: number }) {
+    const { ref, value } = useCountUp(stat.target, delay);
+
+    return (
+        <span
+            ref={ref}
+            className="gradient-mesh-text font-serif text-3xl italic tabular-nums md:text-4xl"
+        >
+            {Math.round(value)}
+            {stat.suffix}
+        </span>
+    );
+}
+
+export function StatRow() {
+    return (
+        <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.2, ease: EASE_CINEMATIC, delay: 1.1 }}
+            className="flex divide-x divide-ethereal/10"
+        >
+            {STATS.map((stat, i) => (
+                <div
+                    key={stat.label}
+                    className="flex flex-col gap-1 px-6 first:pl-0 md:px-8"
+                >
+                    <AnimatedStat stat={stat} delay={0.2 * i} />
+                    <span className="text-xs tracking-[0.15em] text-ethereal/50 uppercase">
+                        {stat.label}
+                    </span>
+                </div>
+            ))}
+        </motion.div>
+    );
+}
