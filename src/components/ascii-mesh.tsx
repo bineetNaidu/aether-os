@@ -1,10 +1,13 @@
 "use client";
 
-import { useMemo } from "react";
+import { useEffect, useState } from "react";
+import { useReducedMotion } from "@/hooks/use-reduced-motion";
 
 const CHARS = "AETHER0S+#=~°".split("");
 const COLS = 64;
 const ROWS = 30;
+const FLICKER_INTERVAL_MS = 140;
+const FLICKER_RATIO = 0.02; // ~2% of cells swap glyph per tick
 
 function mulberry32(seed: number) {
   return function () {
@@ -16,19 +19,48 @@ function mulberry32(seed: number) {
   };
 }
 
+interface Cell {
+  char: string;
+  opacity: number;
+}
+
+function buildInitialCells(): Cell[] {
+  const rand = mulberry32(42);
+  return Array.from({ length: COLS * ROWS }, (_, i) => {
+    const row = Math.floor(i / COLS);
+    const fade = 1 - row / ROWS;
+    const r = rand();
+    return {
+      char: CHARS[Math.floor(rand() * CHARS.length)],
+      opacity: Math.max(0.04, Math.min(0.9, r * fade * 1.3)),
+    };
+  });
+}
+
 export function AsciiMesh() {
-  const cells = useMemo(() => {
-    const rand = mulberry32(42);
-    return Array.from({ length: COLS * ROWS }, (_, i) => {
-      const row = Math.floor(i / COLS);
-      const fade = 1 - row / ROWS;
-      const r = rand();
-      return {
-        char: CHARS[Math.floor(rand() * CHARS.length)],
-        opacity: Math.max(0.04, Math.min(0.9, r * fade * 1.3)),
-      };
-    });
-  }, []);
+  const prefersReducedMotion = useReducedMotion();
+  // Deterministic initial build — identical on server and client, no hydration mismatch
+  const [cells, setCells] = useState<Cell[]>(buildInitialCells);
+
+  useEffect(() => {
+    if (prefersReducedMotion) return;
+
+    const rand = mulberry32(Date.now());
+    const swapsPerTick = Math.floor(COLS * ROWS * FLICKER_RATIO);
+
+    const id = setInterval(() => {
+      setCells((prev) => {
+        const next = prev.slice();
+        for (let s = 0; s < swapsPerTick; s++) {
+          const idx = Math.floor(rand() * next.length);
+          next[idx] = { ...next[idx], char: CHARS[Math.floor(rand() * CHARS.length)] };
+        }
+        return next;
+      });
+    }, FLICKER_INTERVAL_MS);
+
+    return () => clearInterval(id);
+  }, [prefersReducedMotion]);
 
   return (
     <div

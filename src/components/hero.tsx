@@ -43,7 +43,7 @@ export function Hero() {
             <AsciiMesh />
 
             {/* Scrim for bottom text legibility */}
-            <div className="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/50 to-transparent" />
+            <div className="absolute inset-0 bg-linear-to-t from-obsidian via-obsidian/50 to-transparent" />
 
             {/* Content */}
             <motion.div
@@ -53,11 +53,9 @@ export function Hero() {
                 className="relative z-10 flex w-full flex-col gap-12 px-8 pb-16 md:px-16 md:pb-20"
             >
                 <div>
-                    <div className="overflow-hidden">
-                        <motion.div variants={fadeUp}>
-                            <EyebrowBadge />
-                        </motion.div>
-                    </div>
+                    <motion.div variants={fadeUp}>
+                        <EyebrowBadge />
+                    </motion.div>
 
                     <h1 className="mt-4 flex flex-col font-serif text-[clamp(2.75rem,13vw,10rem)] leading-[0.9] italic md:text-[8vw]">
                         <span className="overflow-hidden">

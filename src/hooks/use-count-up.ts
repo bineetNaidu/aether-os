@@ -9,12 +9,14 @@ export function useCountUp(target: number, delay = 0) {
     const isInView = useInView(ref, { once: true, amount: 0.6 });
     const prefersReducedMotion = useReducedMotion();
     const [value, setValue] = useState(0);
+    const [done, setDone] = useState(false);
 
     useEffect(() => {
         if (!isInView) return;
 
         if (prefersReducedMotion) {
             setValue(target);
+            setDone(true);
             return;
         }
 
@@ -23,10 +25,11 @@ export function useCountUp(target: number, delay = 0) {
             delay,
             ease: [0.16, 1, 0.3, 1],
             onUpdate: (v) => setValue(v),
+            onComplete: () => setDone(true),
         });
 
         return () => controls.stop();
     }, [isInView, target, delay, prefersReducedMotion]);
 
-    return { ref, value };
+    return { ref, value, done };
 }

@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { EASE_CINEMATIC } from "@/lib/motion";
 import { useCountUp } from "@/hooks/use-count-up";
+import { useReducedMotion } from "@/hooks/use-reduced-motion";
 
 interface Stat {
     target: number;
@@ -17,18 +18,27 @@ const STATS: Stat[] = [
 ];
 
 function AnimatedStat({ stat, delay }: { stat: Stat; delay: number }) {
-    const { ref, value } = useCountUp(stat.target, delay);
+    const { ref, value, done } = useCountUp(stat.target, delay);
+    const prefersReducedMotion = useReducedMotion();
 
     return (
-        <span
+        <motion.span
             ref={ref}
-            className="gradient-mesh-text font-serif text-3xl italic tabular-nums md:text-4xl"
+            className="gradient-mesh-text inline-block font-serif text-3xl italic tabular-nums md:text-4xl"
+            animate={
+                done && !prefersReducedMotion
+                    ? { opacity: [1, 0.75, 1] }
+                    : { opacity: 1 }
+            }
+            transition={{ duration: 2.6, repeat: Infinity, ease: "easeInOut" }}
         >
             {Math.round(value)}
             {stat.suffix}
-        </span>
+        </motion.span>
     );
 }
+
+
 
 export function StatRow() {
     return (
@@ -43,7 +53,7 @@ export function StatRow() {
                     key={stat.label}
                     className="flex flex-col gap-1 px-6 first:pl-0 md:px-8"
                 >
-                    <AnimatedStat stat={stat} delay={0.2 * i} />
+                    <AnimatedStat stat={stat} delay={2.2 * i} />
                     <span className="text-xs tracking-[0.15em] text-ethereal/50 uppercase">
                         {stat.label}
                     </span>
