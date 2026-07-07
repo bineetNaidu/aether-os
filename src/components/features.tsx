@@ -1,10 +1,11 @@
 import { Zap, ShieldCheck, Layers, Radio } from "lucide-react";
 import { BentoCard } from "@/components/bento-card";
-import { OrbitVisual } from "@/components/orbit-visual";
+import { CoreVisual } from "@/components/core-visual";
 
 export function Features() {
     return (
         <section className="relative bg-obsidian px-8 py-32 md:px-16">
+
             <div className="mx-auto mb-20 max-w-2xl text-center">
                 <span className="text-sm tracking-[0.3em] text-ethereal/50 uppercase">
                     Capabilities
@@ -19,16 +20,18 @@ export function Features() {
                     title="Ambient Core Engine"
                     description="A continuously adapting inference layer that learns your rhythms without ever asking you to configure it."
                     className="md:col-span-2 md:row-span-2"
-                    glow
+                    accent="pink"
+                    dominant
                     delay={0}
                 >
-                    <OrbitVisual />
+                    <CoreVisual />
                 </BentoCard>
 
                 <BentoCard
                     icon={<Zap size={18} />}
                     title="Instant Response"
                     description="Sub-40ms latency across every connected surface, edge-inferred and locally cached."
+                    accent="sunset"
                     delay={0.1}
                 />
 
@@ -36,6 +39,7 @@ export function Features() {
                     icon={<ShieldCheck size={18} />}
                     title="Private by Design"
                     description="On-device processing by default. Nothing leaves your ecosystem unless you explicitly allow it."
+                    accent="violet"
                     delay={0.15}
                 />
 
@@ -44,6 +48,7 @@ export function Features() {
                     title="Layered Modules"
                     description="Compose exactly the capabilities you need — nothing bloated, nothing you didn't ask for."
                     className="md:col-span-2"
+                    accent="pink"
                     delay={0.2}
                 />
 
@@ -51,6 +56,7 @@ export function Features() {
                     icon={<Radio size={18} />}
                     title="Cross-Device Sync"
                     description="One ambient state, mirrored instantly across every screen you own."
+                    accent="violet"
                     delay={0.25}
                 />
             </div>
