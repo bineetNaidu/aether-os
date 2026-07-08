@@ -1,6 +1,10 @@
 import { Zap, ShieldCheck, Layers, Radio } from "lucide-react";
 import { BentoCard } from "@/components/bento-card";
 import { CoreVisual } from "@/components/core-visual";
+import { LatencyPulse } from "./visuals/latency-pulse";
+import { ModuleStack } from "./visuals/module-stack";
+import { PrivacyAura } from "./visuals/privacy-aura";
+import { SyncNetwork } from "./visuals/sync-network";
 
 export function Features() {
     return (
@@ -23,8 +27,9 @@ export function Features() {
                     accent="pink"
                     dominant
                     delay={0}
+                    visual={<CoreVisual />}
                 >
-                    <CoreVisual />
+                    {/* <CoreVisual /> */}
                 </BentoCard>
 
                 <BentoCard
@@ -33,6 +38,7 @@ export function Features() {
                     description="Sub-40ms latency across every connected surface, edge-inferred and locally cached."
                     accent="sunset"
                     delay={0.1}
+                    visual={<LatencyPulse />}
                 />
 
                 <BentoCard
@@ -41,6 +47,7 @@ export function Features() {
                     description="On-device processing by default. Nothing leaves your ecosystem unless you explicitly allow it."
                     accent="violet"
                     delay={0.15}
+                    visual={<PrivacyAura />}
                 />
 
                 <BentoCard
@@ -50,6 +57,7 @@ export function Features() {
                     className="md:col-span-2"
                     accent="pink"
                     delay={0.2}
+                    visual={<ModuleStack />}
                 />
 
                 <BentoCard
@@ -58,6 +66,7 @@ export function Features() {
                     description="One ambient state, mirrored instantly across every screen you own."
                     accent="violet"
                     delay={0.25}
+                    visual={<SyncNetwork />}
                 />
             </div>
         </section>
